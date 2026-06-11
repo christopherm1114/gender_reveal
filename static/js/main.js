@@ -104,3 +104,43 @@ function confirmar(quien) {
   window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
   return false;
 }
+
+// ── LOADING SCREEN ────────────────────────────
+(function initLoader() {
+  const loader  = document.getElementById('loader');
+  const bar     = document.getElementById('loader-bar');
+  const imgSrcs = [
+    '/static/img/nube_rosa.png',
+    '/static/img/nube_celeste.png',
+    '/static/img/globo_rosa.png',
+    '/static/img/globo_azul.png',
+    '/static/img/lazo_rosa.png',
+    '/static/img/lazo_azul.png',
+    '/static/img/bear_blue.png',
+    '/static/img/bear_pink.png',
+  ];
+
+  let loaded = 0;
+  const total = imgSrcs.length;
+
+  function onLoad() {
+    loaded++;
+    bar.style.width = Math.round((loaded / total) * 100) + '%';
+    if (loaded >= total) hideLoader();
+  }
+
+  function hideLoader() {
+    loader.style.opacity = '0';
+    setTimeout(() => loader.style.display = 'none', 650);
+  }
+
+  imgSrcs.forEach(src => {
+    const img = new Image();
+    img.onload  = onLoad;
+    img.onerror = onLoad; // si falla igual avanza
+    img.src     = src;
+  });
+
+  // Máximo 6 segundos de espera aunque no carguen todas
+  setTimeout(hideLoader, 6000);
+})();
