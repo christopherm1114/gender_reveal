@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="🍼 Revelación de Género • Christopher & Paula" />
+  <meta property="og:description" content="¡Estás invitado! Sábado 27 de junio, 3:00 PM" />
+  <meta property="og:type" content="website" />
+  <title>Revelación de Género 🍼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PORTADA
+══════════════════════════════════ -->
+<section class="hero">
+
+  <!-- CAPA 1: Nubes al fondo -->
+  <div class="deco-layer layer-clouds">
+    <img class="deco cloud-tl"  src="/static/img/nube_rosa.png"    alt="" />
+    <img class="deco cloud-tr"  src="/static/img/nube_celeste.png" alt="" />
+    <img class="deco cloud-bl"  src="/static/img/nube_rosa.png"    alt="" />
+    <img class="deco cloud-br"  src="/static/img/nube_celeste.png" alt="" />
+  </div>
+
+  <!-- ARCO / TARJETA CENTRAL -->
+  <div class="arch-card">
+    <p class="arch-parents">Christopher & Paula</p>
+    <p class="arch-question">¿Niña o Niño?</p>
+    <div class="arch-divider"></div>
+    <p class="arch-quote">
+      "Hay secretos que el alma guarda<br/>con ternura, y este es el más<br/>hermoso de todos..."
+    </p>
+    <p class="arch-invite">
+      Te invitamos a compartir con nosotros<br/>
+      la <strong>revelación del género</strong><br/>de nuestro bebé.
+    </p>
+    <div class="arch-divider"></div>
+    <div class="arch-info">
+      <p class="arch-date">Sábado&nbsp;&nbsp;<span class="arch-day">27</span>&nbsp;&nbsp;de Junio</p>
+      <p class="arch-year">&nbsp;·&nbsp; 3:00 PM</p>
+      <p class="arch-place">Quinta "El Descanso"</p>
+    </div>
+    <button class="play-btn-hero" id="play-btn-hero" onclick="toggleMusic()">
+      <span id="play-icon-hero">🎵 &nbsp;Reproducir música</span>
+    </button>
+    <audio id="audio" loop>
+      <source src="/static/audio/music.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
+  <!-- CAPA 3: Globos aerostáticos y lazos (sobre el arco) -->
+  <div class="deco-layer layer-mid">
+    <img class="deco hotair-tl"  src="/static/img/globo_rosa.png"  alt="" />
+    <img class="deco hotair-tr"  src="/static/img/globo_azul.png"  alt="" />
+    <img class="deco balloons-r" src="/static/img/lazo_rosa.png" alt="" />
+    <img class="deco bow-l"      src="/static/img/lazo_azul.png"   alt="" />
+  </div>
+
+  <!-- CAPA 4: Ositos al frente de todo -->
+  <div class="deco-layer layer-front">
+    <img class="deco bear-bl" src="/static/img/bear_blue.png" alt="" />
+    <img class="deco bear-br" src="/static/img/bear_pink.png" alt="" />
+  </div>
+
+  <!-- SEÑAL DE SCROLL -->
+  <div class="scroll-hint">
+    <p class="scroll-text">👇 &nbsp;Desliza hacia abajo para ver toda la invitación</p>
+    <div class="scroll-arrow">▼</div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════
+     CUENTA REGRESIVA
+══════════════════════════════════ -->
+<section class="countdown-section">
+  <p class="section-label">Faltan</p>
+  <div class="countdown" id="countdown">
+    <div class="unit"><span id="dias">--</span><label>Días</label></div>
+    <div class="sep">:</div>
+    <div class="unit"><span id="horas">--</span><label>Horas</label></div>
+    <div class="sep">:</div>
+    <div class="unit"><span id="minutos">--</span><label>Minutos</label></div>
+    <div class="sep">:</div>
+    <div class="unit"><span id="segundos">--</span><label>Segundos</label></div>
+  </div>
+  <p class="section-sublabel">para conocer el gran secreto 🤫</p>
+</section>
+
+
+<!-- ══════════════════════════════════
+     VOTACIÓN
+══════════════════════════════════ -->
+<section class="vote-section">
+  <p class="section-label">¿Cuál es tu predicción?</p>
+  <h2 class="section-title">¿Niño 💙 o Niña 💗?</h2>
+  <p class="vote-subtitle">Vota y descubre qué piensa el resto</p>
+  <div class="vote-buttons">
+    <button class="vote-btn boy"  onclick="votar('nino')" id="btn-nino"><span class="vote-emoji">💙</span><span class="vote-label">Niño</span></button>
+    <button class="vote-btn girl" onclick="votar('nina')" id="btn-nina"><span class="vote-emoji">💗</span><span class="vote-label">Niña</span></button>
+  </div>
+  <div class="vote-results" id="vote-results" style="display:none;">
+    <div class="bar-row">
+      <span class="bar-label boy-color">💙 Niño</span>
+      <div class="bar-track"><div class="bar-fill boy-fill" id="bar-nino"></div></div>
+      <span class="bar-pct" id="pct-nino">0%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label girl-color">💗 Niña</span>
+      <div class="bar-track"><div class="bar-fill girl-fill" id="bar-nina"></div></div>
+      <span class="bar-pct" id="pct-nina">0%</span>
+    </div>
+    <p class="vote-total" id="vote-total"></p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     UBICACIÓN
+══════════════════════════════════ -->
+<section class="location-section">
+  <p class="section-label">¿Cómo llegar?</p>
+  <h2 class="section-title">Quinta "El Descanso"</h2>
+  <div class="map-preview">
+    <iframe src="https://maps.google.com/maps?q=-3.279323,-79.790344&z=16&output=embed"
+      width="100%" height="280" style="border:0;border-radius:16px;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <a class="btn-maps" href="https://www.google.com/maps?q=-3.279323,-79.790344" target="_blank" rel="noopener">
+    📍 Abrir en Google Maps
+  </a>
+</section>
+
+
+<!-- ══════════════════════════════════
+     CONFIRMAR ASISTENCIA
+══════════════════════════════════ -->
+<section class="rsvp-section">
+  <p class="section-label">¿Nos acompañas?</p>
+  <h2 class="section-title">Confirma tu asistencia</h2>
+  <p class="rsvp-subtitle">Escríbenos directamente por WhatsApp</p>
+  <div class="rsvp-name-row">
+    <input type="text" id="nombre-invitado" placeholder="Tu nombre y apellido" class="name-input" />
+  </div>
+  <div class="rsvp-buttons">
+    <a class="btn-whatsapp papa" href="#" onclick="confirmar('papa')" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L0 24l6.335-1.54A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.013-1.378l-.36-.214-3.736.909.938-3.64-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+      Confirmar con Papá 👨
+    </a>
+    <a class="btn-whatsapp mama" href="#" onclick="confirmar('mama')" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L0 24l6.335-1.54A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.013-1.378l-.36-.214-3.736.909.938-3.64-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+      Confirmar con Mamá 👩
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     NOTAS FINALES
+══════════════════════════════════ -->
+<section class="notes-section">
+  <div class="note-card dress-card">
+    <div class="note-icon">👗</div>
+    <p class="note-title">Código de vestimenta</p>
+    <p class="note-text">No hay código estricto — ven como te sientas más cómodo.<br/><em>Tu presencia es lo que nos importa, no tu atuendo.</em> 🤍</p>
+  </div>
+  <div class="note-card gift-card">
+    <div class="note-icon">🎁</div>
+    <p class="note-title">Un detalle con amor</p>
+    <p class="note-text">Tu compañía lo es todo para nosotros.<br/>Para quienes deseen sumarse con un detalle, agradecemos el gesto en <em>sobre sellado</em>. 🎀</p>
+  </div>
+  <div class="note-card adults-card">
+    <div class="note-icon">🥂</div>
+    <p class="note-title">Una velada entre adultos</p>
+    <p class="note-text">Con todo el amor del mundo, les pedimos que este momento lo disfrutemos solo entre adultos.<br/><em>Los pequeños se quedan en casa esta vez</em> 🏠</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Con amor, <strong>Christopher & Paula</strong> 🍼</p>
+  <p class="footer-sub">¡Los esperamos con mucha ilusión!</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
