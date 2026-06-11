@@ -1,22 +1,30 @@
 from flask import Flask, render_template, request, jsonify
-import json
 import os
-from datetime import datetime
+import redis
 
 app = Flask(__name__)
 
-# Archivo para guardar votos
-VOTES_FILE = "/tmp/votes.json"
+# Conexión a Redis (Upstash)
+REDIS_URL = os.environ.get("REDIS_URL")
+r = redis.from_url(REDIS_URL, decode_responses=True)
 
 def load_votes():
-    if os.path.exists(VOTES_FILE):
-        with open(VOTES_FILE, "r") as f:
-            return json.load(f)
-    return {"nino": 0, "nina": 0}
+    nino = int(r.get("votos:nino") or 0)
+    nina = int(r.get("votos:nina") or 0)
+    return {"nino": nino, "nina": nina}
 
-def save_votes(votes):
-    with open(VOTES_FILE, "w") as f:
-        json.dump(votes, f)
+def increment_vote(opcion):
+    r.incr(f"votos:{opcion}")
+
+def build_response(votes):
+    total = votes["nino"] + votes["nina"]
+    return {
+        "nino": votes["nino"],
+        "nina": votes["nina"],
+        "total": total,
+        "pct_nino": round((votes["nino"] / total) * 100) if total > 0 else 0,
+        "pct_nina": round((votes["nina"] / total) * 100) if total > 0 else 0,
+    }
 
 @app.route("/")
 def index():
@@ -27,32 +35,17 @@ def index():
 @app.route("/votar", methods=["POST"])
 def votar():
     data = request.get_json()
-    opcion = data.get("opcion")  # "nino" o "nina"
+    opcion = data.get("opcion")
     if opcion not in ["nino", "nina"]:
         return jsonify({"error": "Opción inválida"}), 400
+    increment_vote(opcion)
     votes = load_votes()
-    votes[opcion] += 1
-    save_votes(votes)
-    total = votes["nino"] + votes["nina"]
-    return jsonify({
-        "nino": votes["nino"],
-        "nina": votes["nina"],
-        "total": total,
-        "pct_nino": round((votes["nino"] / total) * 100) if total > 0 else 0,
-        "pct_nina": round((votes["nina"] / total) * 100) if total > 0 else 0,
-    })
+    return jsonify(build_response(votes))
 
 @app.route("/votos")
 def votos():
     votes = load_votes()
-    total = votes["nino"] + votes["nina"]
-    return jsonify({
-        "nino": votes["nino"],
-        "nina": votes["nina"],
-        "total": total,
-        "pct_nino": round((votes["nino"] / total) * 100) if total > 0 else 0,
-        "pct_nina": round((votes["nina"] / total) * 100) if total > 0 else 0,
-    })
+    return jsonify(build_response(votes))
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
