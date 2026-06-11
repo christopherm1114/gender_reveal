@@ -6,7 +6,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Archivo para guardar votos
-VOTES_FILE = "votes.json"
+VOTES_FILE = "/tmp/votes.json"
 
 def load_votes():
     if os.path.exists(VOTES_FILE):
